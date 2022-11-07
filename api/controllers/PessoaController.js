@@ -1,10 +1,11 @@
+
 const database = require('../models')
 
 class PessoaController {
-  static async pegaTodasAsPessoas(req, res){
+  static async pegaTodasAsPessoas(req, res) {
     try {
       const todasAsPessoas = await database.Pessoas.findAll()
-      return res.status(200).json(todasAsPessoas)  
+      return res.status(200).json(todasAsPessoas)
     } catch (error) {
       return res.status(500).json(error.message)
     }
@@ -13,9 +14,9 @@ class PessoaController {
   static async pegaUmaPessoa(req, res) {
     const { id } = req.params
     try {
-      const umaPessoa = await database.Pessoas.findOne( { 
-        where: { 
-          id: Number(id) 
+      const umaPessoa = await database.Pessoas.findOne({
+        where: {
+          id: Number(id)
         }
       })
       return res.status(200).json(umaPessoa)
@@ -33,6 +34,49 @@ class PessoaController {
       return res.status(500).json(error.message)
     }
   }
+
+
+  static async atualiza(req, res) {
+    const novaInfos = req.body
+    const { id } = req.params
+
+    try {
+      await database.Pessoas.update(novaInfos, { where: { id: Number(id) } }
+
+      )
+
+      const pessoaAtualizda = await database.Pessoas.findOne({
+        where: {
+          id: Number(id)
+        }
+      })
+      res.status(200).json(pessoaAtualizda)
+
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+
+  }
+
+  
+  static async delete(req,res){
+    const { id } = req.params
+
+    try {
+      
+      await database.Pessoas.destroy({where : { id :Number(id)}})
+      res.status(200).json({message:`id ${id} deletado` })
+
+      
+      
+    } catch (error) {
+      
+      res.status(500).json(error.message)
+    }
+
+  }
+
 }
+
 
 module.exports = PessoaController
