@@ -1,16 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Turmas', {
+    return queryInterface.createTable('Nivels', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      data_inicio: {
-        type: Sequelize.DATEONLY
+      desc_Nivel: {
+        type: Sequelize.STRING
       },
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -22,6 +23,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Turmas');
+    return queryInterface.dropTable('Nivels');
   }
 };

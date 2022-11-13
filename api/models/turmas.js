@@ -1,10 +1,25 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Turmas = sequelize.define('Turmas', {
-    data_inicio: DataTypes.DATEONLY
+  const turmas = sequelize.define('turmas', {
+    data_inico: DataTypes.DATE
   }, {});
-  Turmas.associate = function(models) {
-    // associations can be defined here
+  turmas.associate = function(models) {
+    
+    turmas.hasMany(models.Matriculas,{
+
+      foreignKey: 'turma_id'
+
+    })
+
+    turmas.hasMany(models.Pessoas,{
+
+      foreignKey: 'docente_id'
+
+    })
+
+    turmas.belongsTo(models.Pessoas)
+    turmas.belongsTo(models.Niveis)
+    
   };
-  return Turmas;
+  return turmas;
 };
